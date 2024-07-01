@@ -9,6 +9,7 @@
     <style>
         .title {
             margin: 5px;
+            color: #ffffff; /* White title */
         }
 
         .content {
@@ -25,55 +26,65 @@
             padding: 10px;
             margin: 5px;
             border-radius: 15px;
-            background-color: #f3f3f3;
-            inline-size: 100%;
+            background-color: #292929; /* Dark gray background */
+            color: #ffffff; /* White text */
         }
 
-        .bio {
+        .bio, .shortbio, .contact, .events, .officers {
             padding: 10px;
             margin: 5px;
             border-radius: 15px;
-            background-color: #ffffff;
-            color: #000000;
-        }
-
-        .shortbio {
-            padding: 10px;
-            margin: 5px;
-            border-radius: 15px;
-            background-color: #ffffff;
-            color: #000000;
-        }
-
-        .contact, .events, .officers {
-            padding: 10px;
-            margin: 5px;
-            border-radius: 15px;
-            background-color: #ffffff;
-            color: #000000;
+            background-color: #1f1f1f; /* Dark gray background */
+            color: #ffffff; /* White text */
         }
 
         .name a {
-            color: #000000;
+            color: #ffffff; /* White link */
             text-decoration: none;
+        }
+
+        nav {
+            background: linear-gradient(to right, #4F2683, #8A2BE2); /* Dark purple to bright purple gradient */
+            padding: 20px 40px;
+            display: flex;
+            justify-content: flex-start; /* Aligns items to the left */
+            align-items: center;
         }
 
         nav a {
-            color: #4F2683;
-            font-size: 3em;
-            margin-left: 50px;
+            color: #ffffff; /* White text */
+            font-size: 1.5rem;
+            font-weight: bold;
             text-decoration: none;
-        }
-        
-        body {
-        font-family: "Inter";
+            transition: color 0.3s ease;
+            margin-right: 20px; /* Adds spacing between links */
         }
 
+        nav a:first-child {
+            margin-left: 0; /* Removes margin from the first link */
+        }
+
+        nav a:hover {
+            color: #ffffff; /* White text on hover */
+            text-decoration: underline; /* Underline on hover */
+        }
+
+        hr {
+            display: none; /* Hide the horizontal rule */
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: #121212; /* Dark background */
+            color: #ffffff; /* White text */
+            margin: 0;
+            padding: 0;
+        }
     </style>
 </head>
 <body>
     <nav>
-        <a href="{{ url_for('index') }}">Rate My Clubs Western</a>
+        <a href="{{ url_for('index') }}">ClubConnect</a>
         <a href="#">Feed</a>
         <a href="#">Clubs</a>
     </nav>
