@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="title">{{ club.name }}</h1>
+    <div class="content">   
+        <div class="club">
+            <p><b>#{{ club.id }}</b></p>
+            <b>
+                <p class="name">{{ club.name }}</p>
+            </b>
+            <div class="info">
+                <div class="bio">
+                    <h4>Bio</h4>
+                    <p>{{ club.bio }}</p>
+                </div>
+                <div class="contact">
+                    <h4>Contact</h4>
+                    <p>{{ club.contact }}</p>
+                </div>
+                <div class="events">
+                    <h4>Events</h4>
+                    <ul>
+                        {% for event in club.events %}
+                            <li>{{ event.date }} - {{ event.title }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="officers">
+                    <h4>Officers</h4>
+                    <ul>
+                        {% for officer in club.officers %}
+                            <li>{{ officer.name }} - {{ officer.position }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

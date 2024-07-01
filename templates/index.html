@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="title">{% block title %} Clubs {% endblock %}</h1>
+    <div class="content">
+        {% for club in clubs %}
+            <div class="club">
+                <p><b>#{{ club.id }}</b></p>
+                <b>
+                    <p class="name"><a href="{{ url_for('one_club', club_id=club.id) }}">{{ club.name }}</a></p>
+                </b>
+                <div class="info">
+                    <div class="shortbio">
+                        <h4>Bio</h4>
+                        <p>{{ club.shortbio }}</p>
+                    </div>
+                    <div class="contact">
+                        <h4>Contact</h4>
+                        <p>{{ club.contact }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

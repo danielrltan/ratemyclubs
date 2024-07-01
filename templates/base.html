@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %} - FlaskApp</title>
+    <style>
+        .title {
+            margin: 5px;
+        }
+
+        .content {
+            margin: 5px;
+            width: 100%;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .club {
+            flex: 20%;
+            padding: 10px;
+            margin: 5px;
+            border-radius: 15px;
+            background-color: #f3f3f3;
+            inline-size: 100%;
+        }
+
+        .bio {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 15px;
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        .shortbio {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 15px;
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        .contact, .events, .officers {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 15px;
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        .name a {
+            color: #000000;
+            text-decoration: none;
+        }
+
+        nav a {
+            color: #4F2683;
+            font-size: 3em;
+            margin-left: 50px;
+            text-decoration: none;
+        }
+        
+        body {
+        font-family: helvetica;
+        }
+
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('index') }}">Rate My Clubs Western</a>
+        <a href="#">Feed</a>
+        <a href="#">Clubs</a>
+    </nav>
+    <hr>
+    <div class="content">
+        {% block content %} {% endblock %}
+    </div>
+</body>
+</html>
