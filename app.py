@@ -10,6 +10,12 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///clubs.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+# Import for Migrations
+from flask_migrate import Migrate, migrate
+
+# Settings for migrations
+migrate = Migrate(app, db)
+
 # Define the Club model
 class Club(db.Model):
     id = db.Column(db.Integer, primary_key=True)
