@@ -1,5 +1,3 @@
-// curl "https://westernu.campuslabs.ca/engage/api/discovery/search/organizations?top=400" | python -m json.tool > clubs2.json
-
 {
     "@odata.context": "https://collegiatelink-can3.search.windows.net/indexes('organizations')/$metadata#docs(*)",
     "@odata.count": 234,
