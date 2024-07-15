@@ -60,7 +60,7 @@ scrapebp = Blueprint('scrape', __name__)
 
 @scrapebp.cli.command('clubs')
 def scrape():
-    clubs_url = "https://westernu.campuslabs.ca/engage/api/discovery/search/organizations?top=5"
+    clubs_url = "https://westernu.campuslabs.ca/engage/api/discovery/search/organizations?top=400"
     resp_json = requests.get(clubs_url).json()
 
     clublist = resp_json["value"]
