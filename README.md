@@ -28,23 +28,9 @@ The primary goal of this project is to create a centralized platform where stude
    - Users can rate clubs on various criteria.
    - Users can leave comments sharing their personal experiences and feedback.
 
-## Technology Stack
+## Stack
 
 - **Backend**: Flask (Python)
 - **Database**: SQLite (using SQLAlchemy for ORM)
 - **Web Scraping**: Requests and JSON for API interaction
 - **Frontend**: HTML, CSS
-
-## Future Enhancements
-
-- **Rename to "Rate My Organizations"**: Aligning with Western University's terminology, the platform may be renamed to "Rate My Organizations" for consistency.
-- **Advanced Filtering and Search**: Implementing advanced filtering and search functionalities to help users find clubs that match their interests.
-- **Enhanced Rating System**: Adding more detailed rating categories and aggregate scores.
-- **User Authentication**: Enabling user registration and login to personalize the experience and manage contributions.
-
-## How to Run the Project
-
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/yourusername/ratemyclubs.git
-   cd ratemyclubs
