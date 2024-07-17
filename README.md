@@ -28,7 +28,7 @@ The primary goal of this project is to create a centralized platform where stude
    - Users can rate clubs on various criteria.
    - Users can leave comments sharing their personal experiences and feedback.
 
-## Stack
+## Technology Stack
 
 - **Backend**: Flask (Python)
 - **Database**: SQLite (using SQLAlchemy for ORM)
