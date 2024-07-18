@@ -28,7 +28,7 @@ The primary goal of this project is to create a centralized platform where stude
    - Users can rate clubs on various criteria.
    - Users can leave comments sharing their personal experiences and feedback.
 
-## Technology Stack
+## Stack
 
 - **Backend**: Flask (Python)
 - **Database**: SQLite (using SQLAlchemy for ORM)
@@ -41,16 +41,21 @@ The primary goal of this project is to create a centralized platform where stude
 - **Advanced Filtering and Search**: Implementing advanced filtering and search functionalities to help users find clubs that match their interests.
 - **Enhanced Rating System**: Adding more detailed rating categories and aggregate scores.
 - **User Authentication**: Enabling user registration and login to personalize the experience and manage contributions.
-- **Remove Clubs From Database if Not in Official Website***: Detect if a website has been deleted from the official western website and update the database accordingly.
+- **Remove Clubs From Database if Not in Official Website**: Detect if a website has been deleted from the official western website and update the database accordingly.
 
 
-## see whats in the tables
-**cd instance**
-**sqlite3 clubs.db**
-**sqlite> .mode column**
-**sqlite> .headers on**
-**sqlite> select name,shortname, websitekey from club;**
+## View Database Contents
 
-## migrations to update tables
-**flask db migrate -m "comment here database update"**
-**flask db upgrade**
+```bash
+cd instance
+sqlite3 clubs.db
+.mode column
+.headers on
+select name,shortname, websitekey from club;
+```
+## Migrations to Update Tables
+
+```bash
+flask db migrate -m "DATABASE COMMENT HERE"
+flask db upgrade
+```
