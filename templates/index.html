@@ -10,10 +10,18 @@
                     <p class="name"><a href="{{ url_for('one_club', club_name=club.name) }}">{{ club.name }}</a></p>
                 </b>
                 <div class="info">
-                    <div class="shortbio">
-                        <h4>Bio</h4>
-                        <p>{{ club.shortbio }}</p>
+                    {% if club.pictureblob %}
+                        <img src="{{ url_for('fetchprofilepic', club_name=club.name) }}" alt="{{ club.name }} profile picture">
+                    {% else %}
+                        <img src="path/to/default/image.jpg" alt="{{ club.name }} profile picture">
+                    {% endif %}
+                    <div class="summary">
+                        <h4></h4>
+                        <p>{{ club.summary }}</p>
                     </div>
+                    {% for category in club.categorynames.split(";") %}
+                        <p>{{ category }}</p>
+                    {% endfor %}
                 </div>
             </div>
         {% endfor %}

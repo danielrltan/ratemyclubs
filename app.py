@@ -37,7 +37,7 @@ class Club(db.Model):
     name = db.Column(db.String(100), nullable=False)
     profilepicture = db.Column(db.String(100), nullable=True)
     websitekey = db.Column(db.String(100), nullable=False)
-    shortname = db.Column(db.String(100), nullable=False)
+    shortname = db.Column(db.String(100), nullable=True)
     summary = db.Column(db.String(200), nullable=True)
     description = db.Column(db.Text, nullable=True)
     contact = db.Column(db.String(100), nullable=True)
@@ -47,6 +47,8 @@ class Club(db.Model):
     website = db.Column(db.String(100), nullable=True)
     facebook = db.Column(db.String(100), nullable=True)
     twitter = db.Column(db.String(100), nullable=True)
+    categorynames = db.Column(db.String(300), nullable=True)
+    pictureblob = db.Column(db.LargeBinary, nullable=True)
     
 
 class ClubCategoryRelation(db.Model):
@@ -55,6 +57,14 @@ class ClubCategoryRelation(db.Model):
 
 import json
 import requests
+
+def scrapepicture(pictureid):
+        picture_url = f"https://se-images.campuslabs.ca/clink/images/{pictureid}?preset=med-sq"
+        response = requests.get(picture_url)
+        if response.status_code == 200:
+            return response.content
+        else:
+            return None
 
 scrapebp = Blueprint('scrape', __name__)
 
@@ -67,16 +77,30 @@ def scrape():
 
     for clubResponse in clublist:
         print(clubResponse["Id"])
-        cur_club = Club(**{k.lower():v for k, v in clubResponse.items() if k in {'Id', 'Name', 'ProfilePicture', 'Summary', 'WebsiteKey', 'ShortName', 'Description'}})
-        existingrow = db.session.query(Club).where(Club.id == cur_club.id)
-        if existingrow.first() is None:
+        cur_club = Club(**{k.lower():v for k, v in clubResponse.items() if k in {'Id', 'Name', 'ProfilePicture', 'Summary', 'WebsiteKey', 'ShortName', 'Description', 'CategoryNames'}})
+        delimitedCategories = ""
+        for category in clubResponse["CategoryNames"]:
+            delimitedCategories += category + ";"
+        cur_club.categorynames = delimitedCategories
+        q_result = db.session.query(Club).where(Club.id == cur_club.id)
+        target_row = q_result.first()
+        if target_row is None:
+            cur_club.pictureblob = scrapepicture(cur_club.profilepicture)
             db.session.add(cur_club)
         else:
-            for k, v in clubResponse.items(): 
-                if k in {'Id', 'Name', 'ProfilePicture', 'Summary', 'WebsiteKey', 'ShortName', 'Description'}:
-                    setattr(existingrow, k, v)
+            if target_row.profilepicture != cur_club.profilepicture or target_row.pictureblob is None:
+                target_row.pictureblob = scrapepicture(cur_club.profilepicture)
+            target_row.name = cur_club.name
+            target_row.id = cur_club.id
+            target_row.name = cur_club.name
+            target_row.profilepicture = cur_club.profilepicture
+            target_row.summary = cur_club.summary
+            target_row.websitekey = cur_club.websitekey
+            target_row.shortname = cur_club.shortname
+            target_row.description = cur_club.description
+            target_row.categorynames = cur_club.categorynames
         db.session.commit()
-
+        
 app.register_blueprint(scrapebp)
 
 @app.route('/')
@@ -90,6 +114,13 @@ def one_club(club_name):
     if not club:
         abort(404)
     return render_template('club_page.html', club=club)
+
+@app.route('/clubprofilepic/<string:club_name>')
+def fetchprofilepic(club_name):
+    club = Club.query.filter_by(name=club_name).first()
+    if not club:
+        abort(404)
+    return club.pictureblob, 200, {'Content-Type': 'image/png'}
 
 if __name__ == "__main__":
     app.run(debug=True)

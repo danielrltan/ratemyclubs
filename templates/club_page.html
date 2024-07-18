@@ -2,15 +2,20 @@
 
 {% block content %}
     <h1 class="title">{{ club.name }}</h1>
-    <div class="content">   
+    <div class="content">
         <div class="club">
             <b>
                 <p class="name">{{ club.name }}</p>
             </b>
             <div class="info">
-                <div class="bio">
-                    <h4>Bio</h4>
-                    <p>{{ club.bio }}</p>
+                {% if club.pictureblob %}
+                    <img src="{{ url_for('fetchprofilepic', club_name=club.name) }}" alt="{{ club.name }} profile picture">
+                {% else %}
+                    <img src="path/to/default/image.jpg" alt="{{ club.name }} profile picture">
+                {% endif %}
+                <div class="description">
+                    <h4></h4>
+                    <p>{{ club.description }}</p>
                 </div>
                 <div class="contact">
                     <h4>Contact</h4>
