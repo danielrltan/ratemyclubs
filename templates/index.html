@@ -5,7 +5,7 @@
     <div class="content">
         {% for club in clubs %}
             <div class="club">
-                <p><b>{{ club.id }}</b></p>
+
                 <b>
                     <p class="name"><a href="{{ url_for('one_club', club_name=club.name) }}">{{ club.name }}</a></p>
                 </b>

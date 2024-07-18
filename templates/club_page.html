@@ -14,8 +14,8 @@
                     <img src="path/to/default/image.jpg" alt="{{ club.name }} profile picture">
                 {% endif %}
                 <div class="description">
-                    <h4></h4>
-                    <p>{{ club.description }}</p>
+                    <h4>Description</h4>
+                    <p>{{ club.description|safe }}</p>
                 </div>
                 <div class="contact">
                     <h4>Contact</h4>
