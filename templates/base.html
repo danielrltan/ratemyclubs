@@ -30,15 +30,19 @@
         }
 
         .club {
-            display: flex;
-            align-items: center;
             flex: 1 1 100%; /* Change flex to 1 1 100% */
-            padding: 20px;
+            padding: 40px;
             margin: 10px 0; 
             border-radius: 15px;
             background-color: #292929; /* Dark gray background */
             color: #ffffff; /* White text */
             cursor: pointer; /* Indicate clickable cards */
+        }
+
+
+        .club:hover {
+            box-shadow: 0 4px 8px rgba(119, 0, 255, 0.219); /* Shadow effect on hover */
+            transition: box-shadow 0.3s ease; /* Smooth transition for shadow effect */
         }
 
         .bio, .shortbio, .contact, .events, .officers {
