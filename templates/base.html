@@ -10,28 +10,36 @@
         .title {
             margin: 20px;
             color: #ffffff; /* White title */
-            
+        }
+
+        .clubimage {
+            border-radius: 15px;
+            max-width: 150px;
+            max-height: 150px;
+            margin-right: 20px;
         }
 
         .content {
-            margin: 10px;
-            width: 100%;
+            width: 85%; /* 4/6 of the page width */
+            max-width: 1200px; /* Adjust the maximum width as needed */
+            margin: 0 auto; /* Centers the content div */
             border-radius: 15px;
             display: flex;
-            flex-direction: column; /* Change flex-direction to column */
-            flex-wrap: nowrap; /* Remove flex-wrap */
+            flex-direction: column;
+            flex-wrap: nowrap;
         }
 
         .club {
+            display: flex;
+            align-items: center;
             flex: 1 1 100%; /* Change flex to 1 1 100% */
             padding: 20px;
-            margin: 10px 0; /* Change margin to 20px 0 */
+            margin: 10px 0; 
             border-radius: 15px;
             background-color: #292929; /* Dark gray background */
             color: #ffffff; /* White text */
             cursor: pointer; /* Indicate clickable cards */
         }
-
 
         .bio, .shortbio, .contact, .events, .officers {
             padding: 20px;
@@ -104,6 +112,24 @@
 
         .contact-btn:hover {
             background-color: #8A2BE2; /* Bright purple */
+        }
+
+        .club-card {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .club-info {
+            flex-grow: 1;
+        }
+
+        .name {
+            font-size: 1.2em;
+        }
+
+        .summary {
+            margin-top: 10px;
         }
     </style>
 </head>

@@ -5,23 +5,23 @@
     <div class="content">
         {% for club in clubs %}
             <div class="club">
-
-                <b>
-                    <p class="name"><a href="{{ url_for('one_club', club_name=club.name) }}">{{ club.name }}</a></p>
-                </b>
-                <div class="info">
+                <div class="club-card">
                     {% if club.pictureblob %}
-                        <img src="{{ url_for('fetchprofilepic', club_name=club.name) }}" alt="{{ club.name }} profile picture">
+                        <img src="{{ url_for('fetchprofilepic', club_name=club.name) }}" class="clubimage" alt="{{ club.name }} profile picture">
                     {% else %}
-                        <img src="path/to/default/image.jpg" alt="{{ club.name }} profile picture">
+                        <img src="path/to/default/image.jpg" class="clubimage" alt="{{ club.name }} profile picture">
                     {% endif %}
-                    <div class="summary">
-                        <h4></h4>
-                        <p>{{ club.summary }}</p>
+                    <div class="club-info">
+                        <b>
+                            <p class="name"><a href="{{ url_for('one_club', club_name=club.name) }}">{{ club.name }}</a></p>
+                        </b>
+                        <div class="summary">
+                            <p>{{ club.summary }}</p>
+                        </div>
+                        {% for category in club.categorynames.split(";") %}
+                            <p>{{ category }}</p>
+                        {% endfor %}
                     </div>
-                    {% for category in club.categorynames.split(";") %}
-                        <p>{{ category }}</p>
-                    {% endfor %}
                 </div>
             </div>
         {% endfor %}
