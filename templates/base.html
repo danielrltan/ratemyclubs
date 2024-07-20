@@ -52,7 +52,7 @@
 
 
         .club:hover {
-            box-shadow: 0 4px 8px rgba(119, 0, 255, 0.219); /* Shadow effect on hover */
+            box-shadow: 0 0px 25px rgba(119, 0, 255, 0.404); /* Shadow effect on hover */
             transition: box-shadow 0.3s ease; /* Smooth transition for shadow effect */
         }
 
@@ -80,6 +80,8 @@
         nav img {
             height: 50px; /* Adjust the height as needed */
             margin-right: 20px; /* Space between logo and links */
+            user-select: none;
+            pointer-events: none;
         }
 
         nav a {
@@ -161,6 +163,7 @@
 
         .searchbar input[type="text"] {
             font-family: "Inter", sans-serif;
+            font-size: 16px;
             padding: 15px;
             border: none;
             border-radius: 50px 15px 15px 50px;
