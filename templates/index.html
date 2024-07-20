@@ -2,6 +2,10 @@
 
 {% block content %}
     <h1 class="title">{% block title %} Clubs {% endblock %}</h1>
+    <form method="POST" action="/" class="searchbar">
+        <input type="text" name="search" placeholder="Search clubs">
+        <input type="Submit" value="🔍" class="searchbar">
+    </form>
     <div class="content">
         {% for club in clubs %}
             <div class="club">

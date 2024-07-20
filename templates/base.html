@@ -46,6 +46,8 @@
             background-color: #292929; /* Dark gray background */
             color: #ffffff; /* White text */
             cursor: pointer; /* Indicate clickable cards */
+            box-shadow: none;
+            transition: box-shadow 0.3s ease;
         }
 
 
@@ -111,20 +113,24 @@
             font-size: 14px;
         }
 
-        .contact-btn {
+        .clubinfobtn {
             display: inline-block;
             padding: 10px 20px;
             margin-top: 20px;
             font-size: 16px;
             color: #ffffff;
             background-color: #4F2683; /* Dark purple */
+            transition: background-color 0.3s ease;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 50px;
             text-align: center;
+            height: 20px;
+            width: 175px;
         }
 
-        .contact-btn:hover {
+        .clubinfobtn:hover {
             background-color: #8A2BE2; /* Bright purple */
+            transition: background-color 0.3s ease;
         }
 
         .club-card {
@@ -144,6 +150,40 @@
 
         .summary {
             margin-top: -7.5px;
+        }
+
+        .searchbar {
+            font-family: "Inter", sans-serif;
+            display: flex;
+            border-radius: 15px;
+            width: 100%; /* Set the width to 100% to match the club card length */
+        }
+
+        .searchbar input[type="text"] {
+            font-family: "Inter", sans-serif;
+            padding: 15px;
+            border: none;
+            border-radius: 50px 15px 15px 50px;
+            width: 100%; /* Set the width to 100% to match the club card length */
+            margin: 0px 0px 25px 10px;
+        }
+
+        .searchbar input[type="submit"] {
+            font-size: x-large;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 15px 50px 50px 15px;
+            background-color: #4F2683; /* Dark purple */
+            transition: background-color 0.3s ease;
+            color: #ffffff;
+            cursor: pointer;
+            width: auto; /* Set the width to auto to adjust based on the content */
+            margin: 0px 0px 25px 10px;
+        }
+
+        .searchbar input[type="submit"]:hover {
+            background-color: #8A2BE2; /* Bright purple */
+            transition: background-color 0.3s ease;
         }
     </style>
 </head>

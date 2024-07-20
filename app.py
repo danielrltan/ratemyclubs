@@ -122,5 +122,21 @@ def fetchprofilepic(club_name):
         abort(404)
     return club.pictureblob, 200, {'Content-Type': 'image/png'}
 
+@app.route('/', methods=['GET', 'POST'])
+def clubsearch():
+    search_query = request.form.get('search')
+    clubs = Club.query
+
+    if search_query:
+        clubs = clubs.filter(
+            (Club.name.contains(search_query)) |
+            (Club.websitekey.contains(search_query)) |
+            (Club.shortname.contains(search_query)) |
+            (Club.categorynames.contains(search_query))
+        )
+
+    clubs = clubs.all()
+    return render_template('index.html', clubs=clubs)
+
 if __name__ == "__main__":
     app.run(debug=True)
