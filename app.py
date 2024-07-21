@@ -105,8 +105,21 @@ app.register_blueprint(scrapebp)
 
 @app.route('/')
 def index():
-    clubs = Club.query.all()
+    search_query = request.args.get('search')
+    
+    clubs = Club.query
+
+    if search_query:
+        clubs = clubs.filter(
+            (Club.name.contains(search_query)) |
+            (Club.websitekey.contains(search_query)) |
+            (Club.shortname.contains(search_query)) |
+            (Club.categorynames.contains(search_query))
+        )
+
+    clubs = clubs.all()
     return render_template('index.html', clubs=clubs)
+
 
 @app.route('/club/<string:club_name>')
 def one_club(club_name):
@@ -121,22 +134,6 @@ def fetchprofilepic(club_name):
     if not club:
         abort(404)
     return club.pictureblob, 200, {'Content-Type': 'image/png'}
-
-@app.route('/', methods=['GET', 'POST'])
-def clubsearch():
-    search_query = request.form.get('search')
-    clubs = Club.query
-
-    if search_query:
-        clubs = clubs.filter(
-            (Club.name.contains(search_query)) |
-            (Club.websitekey.contains(search_query)) |
-            (Club.shortname.contains(search_query)) |
-            (Club.categorynames.contains(search_query))
-        )
-
-    clubs = clubs.all()
-    return render_template('index.html', clubs=clubs)
-
+    
 if __name__ == "__main__":
     app.run(debug=True)
