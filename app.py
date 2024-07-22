@@ -50,13 +50,53 @@ class Club(db.Model):
     categorynames = db.Column(db.String(300), nullable=True)
     pictureblob = db.Column(db.LargeBinary, nullable=True)
     
+class Events(db.Model):
+    id = db.Column(db.String(100), nullable=False, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text, nullable=True)
+    location = db.Column(db.Text, nullable=True)
+    startsOn = db.Column(db.DateTime, nullable = True)
+    endsOn = db.Column(db.DateTime, nullable = True)
+    imagePath = db.Column(db.String(100), nullable=True)
+    pictureblob = db.Column(db.LargeBinary, nullable=True)
+    theme = db.Column(db.Text, nullable=True)
+    categorynames = db.Column(db.String(300), nullable=True)
+    latitude = db.Column(db.Text, nullable=True)
+    longitude = db.Column(db.Text, nullable=True)
 
-class ClubCategoryRelation(db.Model):
-    clubid = db.Column(db.String(100), nullable=False, primary_key=True)
-    categoryname = db.Column(db.String(100), nullable=False, primary_key=True)
 
 import json
 import requests
+
+# Roster
+# https://westernu.campuslabs.ca/engage/organization/%7B%7BWebsiteKey%7D%7D/roster
+# window.initialAppState = {
+# ...
+# };
+
+# Event RSS feed
+# https://westernu.campuslabs.ca/engage/organization/associationofroleplayers/events.rss
+
+# Past events
+# https://westernu.campuslabs.ca/engage/api/discovery/event/search
+# endsBefore=2024-07-21T20%3A00%3A57-04%3A00
+# &orderByField=endsOn
+# &orderByDirection=descending
+# &status=Approved
+# &take=15
+# &query=
+# &skip=0
+# &organizationIds%5B0%5D=1746
+
+# https://westernu.campuslabs.ca/engage/api/discovery/event/search
+# endsAfter=2024-07-21T20%3A06%3A57-04%3A00
+# &orderByField=endsOn
+# &orderByDirection=ascending
+# &status=Approved
+# &take=15
+# &query=
+# &skip=0
+# &organizationIds%5B0%5D=1746
 
 def scrapepicture(pictureid):
         picture_url = f"https://se-images.campuslabs.ca/clink/images/{pictureid}?preset=med-sq"
