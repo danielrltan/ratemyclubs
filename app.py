@@ -143,6 +143,51 @@ def scrape():
         
 app.register_blueprint(scrapebp)
 
+@scrapebp.cli.command('events')
+def scrape_events():
+    clubs_url = "https://westernu.campuslabs.ca/engage/api/discovery/event/search?endsBefore=2028-07-21T20%3A00%3A57-04%3A00&orderByField=endsOn&orderByDirection=descending&status=Approved&take=100&query=&skip=0&organizationIds%5B0%5D="
+
+    ci = 0
+    clubs = Club.query.all()
+
+    for c in clubs:
+        if ci > 10:
+            break
+        ci += 1
+        resp_json = requests.get(clubs_url + c.id).json()
+
+        eventlist = resp_json["value"]
+
+        for ev in eventlist:
+            print(ev["id"])
+            cur_ev = Events(**{k.lower():v for k, v in eventlist.items() if k in { 'id',  'name',  'description',  'location',  'startsOn', 'endsOn', 'imagePath', 'pictureblob', 'theme', 'categorynames', 'latitude', 'longitude' }})
+            delimitedCategories = ""
+            for category in ev["categoryNames"]:
+                delimitedCategories += category + ";"
+            cur_ev.categorynames = delimitedCategories
+            q_result = db.session.query(Events).where(Events.id == cur_ev.id)
+            target_row = q_result.first()
+            if target_row is None:
+                cur_ev.pictureblob = scrapepicture(cur_ev.imagePath)
+                db.session.add(cur_ev)
+            else:
+                if target_row.imagePath != cur_ev.i or target_row.pictureblob is None:
+                    target_row.pictureblob = scrapepicture(cur_ev.imagePath)
+                target_row.name = cur_ev.name
+                target_row.id = cur_ev.id
+                target_row.name = cur_ev.name
+                target_row.description = cur_ev.description
+                target_row.location = cur_ev.location
+                target_row.startsOn = cur_ev.startsOn 
+                target_row.endsOn = cur_ev.endsOn 
+                target_row.imagePath = cur_ev.imagePath 
+                target_row.theme = cur_ev.theme 
+                target_row.categorynames = cur_ev.categorynames 
+                target_row.latitude = cur_ev.latitude 
+                target_row.longitude = cur_ev.longitude 
+
+            db.session.commit()
+
 @app.route('/')
 def index():
     search_query = request.args.get('search')
