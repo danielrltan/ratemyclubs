@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, url_for, redirect, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask import Blueprint
+from datetime import datetime
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///clubs.db'
@@ -52,6 +53,7 @@ class Club(db.Model):
     
 class Events(db.Model):
     id = db.Column(db.String(100), nullable=False, primary_key=True)
+    clubid = db.Column(db.String(100), nullable=False)
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, nullable=True)
     location = db.Column(db.Text, nullable=True)
@@ -140,8 +142,7 @@ def scrape():
             target_row.description = cur_club.description
             target_row.categorynames = cur_club.categorynames
         db.session.commit()
-        
-app.register_blueprint(scrapebp)
+
 
 @scrapebp.cli.command('events')
 def scrape_events():
@@ -151,16 +152,19 @@ def scrape_events():
     clubs = Club.query.all()
 
     for c in clubs:
-        if ci > 10:
+        if ci > 3:
             break
         ci += 1
         resp_json = requests.get(clubs_url + c.id).json()
 
-        eventlist = resp_json["value"]
+        eventlist = resp_json["value"]  # Access events directly from the 'value' key
 
         for ev in eventlist:
             print(ev["id"])
-            cur_ev = Events(**{k.lower():v for k, v in eventlist.items() if k in { 'id',  'name',  'description',  'location',  'startsOn', 'endsOn', 'imagePath', 'pictureblob', 'theme', 'categorynames', 'latitude', 'longitude' }})
+            cur_ev = Events(**{k:v for k, v in ev.items() if k in { 'id',  'name',  'description',  'location',  'startsOn', 'endsOn', 'imagePath', 'pictureblob', 'theme', 'categorynames', 'latitude', 'longitude' }})
+            cur_ev.clubid = c.id
+            cur_ev.startsOn = datetime.strptime(ev["startsOn"], '%Y-%m-%dT%H:%M:%S+00:00')
+            cur_ev.endsOn = datetime.strptime(ev["endsOn"], '%Y-%m-%dT%H:%M:%S+00:00')
             delimitedCategories = ""
             for category in ev["categoryNames"]:
                 delimitedCategories += category + ";"
@@ -171,7 +175,7 @@ def scrape_events():
                 cur_ev.pictureblob = scrapepicture(cur_ev.imagePath)
                 db.session.add(cur_ev)
             else:
-                if target_row.imagePath != cur_ev.i or target_row.pictureblob is None:
+                if target_row.imagePath != cur_ev.imagePath or target_row.pictureblob is None:
                     target_row.pictureblob = scrapepicture(cur_ev.imagePath)
                 target_row.name = cur_ev.name
                 target_row.id = cur_ev.id
@@ -187,6 +191,8 @@ def scrape_events():
                 target_row.longitude = cur_ev.longitude 
 
             db.session.commit()
+
+app.register_blueprint(scrapebp)
 
 @app.route('/')
 def index():
