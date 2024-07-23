@@ -58,9 +58,9 @@
                         <li>Overall Rating: {{ rating.overall_rating }}</li>
                         <li>Meeting Frequency: {{ rating.meeting_frequency }}</li>
                         <li>Comment: {{ rating.comment|default('No comment provided') }}</li>
-                        <button type="button" onclick="window.location.href='{{ url_for('edit_rating', club_name=club.name, rating_id=rating.id) }}'" class="edit-btn">Edit</button>
+                        <button type="button" onclick="window.location.href='{{ url_for('edit_rating', club_name=club.name, rating_id=rating.id) }}'" class="edit-btn">✏️</button>
                         <form method="POST">
-                            <input type="submit" formaction="{{ url_for('delete_rating', club_name=club.name, rating_id=rating.id) }}" value="Delete Rating" onclick="return confirm('Are you sure you want to delete this rating?')">
+                            <input type="submit" formaction="{{ url_for('delete_rating', club_name=club.name, rating_id=rating.id) }}" value="🗑️" onclick="return confirm('Are you sure you want to delete this rating?')">
                         </form>
                         <h3></h3>
                         {% endfor %}
