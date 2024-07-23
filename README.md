@@ -37,6 +37,7 @@ The primary goal of this project is to create a centralized platform where stude
 
 ## Future Enhancements
 - **Clean up Respository**: Yes the repo is super cluttered right now, will clean it up as I go and learn!!
+- **Use Carbon Framework**: Implementing IBM's CSS framework to make my website design more organized and clean.
 - **Advanced Filtering and Search**: Implementing advanced filtering and search functionalities to help users find clubs that match their interests.
 - **Enhanced Rating System**: Adding more detailed rating categories and aggregate scores.
 - **User Authentication**: Enabling user registration and login to personalize the experience and manage contributions.
