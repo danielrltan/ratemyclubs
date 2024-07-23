@@ -16,6 +16,15 @@ from flask_migrate import Migrate, migrate
 # Settings for migrations
 migrate = Migrate(app, db)
 
+class Rating(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    club_id = db.Column(db.String(100), db.ForeignKey('club.id'))
+    overall_rating = db.Column(db.Float, nullable=False)
+    meeting_frequency = db.Column(db.Float, nullable=False)
+    comment = db.Column(db.String(200), nullable=True)
+
+    club = db.relationship('Club', backref=db.backref('ratings', lazy=True))
+
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.String(20), nullable=False)
@@ -143,6 +152,72 @@ def scrape():
             target_row.categorynames = cur_club.categorynames
         db.session.commit()
 
+@app.route('/club/<string:club_name>/rate', methods=['POST'])
+def rate_club(club_name):
+    club = Club.query.filter_by(name=club_name).first()
+    if not club:
+        abort(404)
+
+    overall_rating_value = request.form.get('overall_rating')
+    meeting_frequency_value = request.form.get('meeting_frequency')
+    comment_value = request.form.get('comment')
+
+    if not overall_rating_value or not meeting_frequency_value or not comment_value:
+        abort(400)
+
+    try:
+        overall_rating_value = float(overall_rating_value)
+        meeting_frequency_value = float(meeting_frequency_value)
+    except ValueError:
+        abort(400)
+
+    new_rating = Rating(club_id=club.id, overall_rating=overall_rating_value, meeting_frequency=meeting_frequency_value, comment=comment_value)
+    db.session.add(new_rating)
+    db.session.commit()
+
+    return redirect(url_for('one_club', club_name=club_name))
+
+@app.route('/club/<string:club_name>/ratings')
+def get_club_ratings(club_name):
+    club = Club.query.filter_by(name=club_name).first()
+    if not club:
+        abort(404)
+
+    ratings = club.ratings
+    average_overall_rating = sum(rating.overall_rating for rating in ratings) / len(ratings) if ratings else 0
+    average_meeting_frequency = sum(rating.meeting_frequency for rating in ratings) / len(ratings) if ratings else 0
+    ratings_with_comments = [{'rating': rating, 'comment': rating.comment if rating.comment else 'No comment'} for rating in ratings]
+
+    return render_template('club_ratings.html', club=club, ratings=ratings_with_comments,
+                           average_overall_rating=average_overall_rating,
+                           average_meeting_frequency=average_meeting_frequency)
+
+@app.route('/club/<club_name>/rating/<rating_id>/edit', methods=['GET', 'POST'])
+def edit_rating(club_name, rating_id):
+    club = Club.query.filter_by(name=club_name).first()
+    rating = Rating.query.filter_by(id=rating_id).first()
+
+    if request.method == 'POST':
+        rating.overall_rating = request.form['overall_rating']
+        rating.meeting_frequency = request.form['meeting_frequency']
+        rating.comment = request.form['comment']
+        db.session.commit()
+        return redirect(url_for('one_club', club_name=club_name))
+
+    return render_template('edit_rating.html', club=club, rating=rating)
+
+
+@app.route('/club/<club_name>/rating/<rating_id>/delete', methods=['POST'])
+def delete_rating(club_name, rating_id):
+    club = Club.query.filter_by(name=club_name).first()
+    rating = Rating.query.filter_by(id=rating_id).first()
+
+    if not club or not rating:
+        abort(404)
+
+    db.session.delete(rating)
+    db.session.commit()
+    return redirect(url_for('one_club', club_name=club_name))
 
 @scrapebp.cli.command('events')
 def scrape_events():
@@ -217,7 +292,12 @@ def one_club(club_name):
     club = Club.query.filter_by(name=club_name).first()
     if not club:
         abort(404)
-    return render_template('club_page.html', club=club)
+
+    ratings = club.ratings
+    average_overall_rating = round(sum(rating.overall_rating for rating in ratings) / len(ratings) if ratings else 0, 1)
+    average_meeting_frequency = round(sum(rating.meeting_frequency for rating in ratings) / len(ratings) if ratings else 0, 1)
+
+    return render_template('club_page.html', club=club, average_overall_rating=average_overall_rating, average_meeting_frequency=average_meeting_frequency)
 
 @app.route('/clubprofilepic/<string:club_name>')
 def fetchprofilepic(club_name):
