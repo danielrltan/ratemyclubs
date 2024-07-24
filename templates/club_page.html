@@ -52,11 +52,15 @@
                     <h4>{{ club.name}} Ratings</h4>
                     <p>Overall Rating: {{ average_overall_rating }}</p>
                     <p>Meeting Frequency: {{ average_meeting_frequency }}</p>
+                    <p>Club Value: {{ average_club_value }}</p>
+                    <p>Member Count: {{ average_member_count }}</p>
                     <ul>
                         {% for rating in club.ratings %}
                         <h5>User rating</h5>
                         <li>Overall Rating: {{ rating.overall_rating }}</li>
                         <li>Meeting Frequency: {{ rating.meeting_frequency }}</li>
+                        <li>Club Value: {{ rating.club_value }}</li>
+                        <li>Member Count: {{ rating.member_count }}</li>
                         <li>Comment: {{ rating.comment|default('No comment provided') }}</li>
                         <button type="button" onclick="window.location.href='{{ url_for('edit_rating', club_name=club.name, rating_id=rating.id) }}'" class="edit-btn">✏️</button>
                         <form method="POST">
@@ -77,6 +81,14 @@
                         <div class="form-group">
                             <label for="meeting_frequency">Meeting Frequency:</label>
                             <input type="number" id="meeting_frequency" name="meeting_frequency" min="0.5" max="5" step="0.5" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="club_value">Club Value:</label>
+                            <input type="number" id="club_value" name="club_value" min="0.5" max="5" step="0.5" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="member_count">Member Count:</label>
+                            <input type="number" id="member_count" name="member_count" min="00">
                         </div>
                         <div class="form-group">
                             <label for="comment">Comment:</label>

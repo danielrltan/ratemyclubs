@@ -21,7 +21,7 @@ class Rating(db.Model):
     club_id = db.Column(db.String(100), db.ForeignKey('club.id'))
     overall_rating = db.Column(db.Float, nullable=False)
     meeting_frequency = db.Column(db.Float, nullable=False)
-    club_value = db.Column(db.Float, nullable=False)
+    club_value = db.Column(db.Float, nullable=False, default=0.0)
     member_count = db.Column(db.Integer, nullable=False)
     comment = db.Column(db.String(200), nullable=True)
 
@@ -162,18 +162,22 @@ def rate_club(club_name):
 
     overall_rating_value = request.form.get('overall_rating')
     meeting_frequency_value = request.form.get('meeting_frequency')
+    club_value_value = request.form.get('club_value')
+    member_count_value = request.form.get('member_count')
     comment_value = request.form.get('comment')
 
-    if not overall_rating_value or not meeting_frequency_value or not comment_value:
+    if not overall_rating_value or not meeting_frequency_value or not club_value_value or not member_count_value or not comment_value:
         abort(400)
 
     try:
         overall_rating_value = float(overall_rating_value)
         meeting_frequency_value = float(meeting_frequency_value)
+        club_value_value = float(club_value_value)
+        member_count_value = int(member_count_value)
     except ValueError:
         abort(400)
 
-    new_rating = Rating(club_id=club.id, overall_rating=overall_rating_value, meeting_frequency=meeting_frequency_value, comment=comment_value)
+    new_rating = Rating(club_id=club.id, overall_rating=overall_rating_value, meeting_frequency=meeting_frequency_value, club_value=club_value_value, member_count=member_count_value, comment=comment_value)
     db.session.add(new_rating)
     db.session.commit()
 
@@ -188,11 +192,13 @@ def get_club_ratings(club_name):
     ratings = club.ratings
     average_overall_rating = sum(rating.overall_rating for rating in ratings) / len(ratings) if ratings else 0
     average_meeting_frequency = sum(rating.meeting_frequency for rating in ratings) / len(ratings) if ratings else 0
+    average_club_value = sum(rating.club_value for rating in ratings) / len(ratings) if ratings else 0
+    average_member_count = sum(rating.member_count for rating in ratings) / len(ratings) if ratings else 0
     ratings_with_comments = [{'rating': rating, 'comment': rating.comment if rating.comment else 'No comment'} for rating in ratings]
 
     return render_template('club_ratings.html', club=club, ratings=ratings_with_comments,
                            average_overall_rating=average_overall_rating,
-                           average_meeting_frequency=average_meeting_frequency)
+                           average_meeting_frequency=average_meeting_frequency, average_club_value=average_club_value, average_member_count=average_member_count)
 
 @app.route('/club/<club_name>/rating/<rating_id>/edit', methods=['GET', 'POST'])
 def edit_rating(club_name, rating_id):
@@ -202,6 +208,8 @@ def edit_rating(club_name, rating_id):
     if request.method == 'POST':
         rating.overall_rating = request.form['overall_rating']
         rating.meeting_frequency = request.form['meeting_frequency']
+        rating.club_value = request.form['club_value']
+        rating.member_count = request.form['member_count']
         rating.comment = request.form['comment']
         db.session.commit()
         return redirect(url_for('one_club', club_name=club_name))
@@ -298,8 +306,10 @@ def one_club(club_name):
     ratings = club.ratings
     average_overall_rating = round(sum(rating.overall_rating for rating in ratings) / len(ratings) if ratings else 0, 1)
     average_meeting_frequency = round(sum(rating.meeting_frequency for rating in ratings) / len(ratings) if ratings else 0, 1)
+    average_club_value = round(sum(rating.club_value for rating in ratings) / len(ratings) if ratings else 0, 1)
+    average_member_count = sum(rating.member_count for rating in ratings) / len(ratings) if ratings else 0
 
-    return render_template('club_page.html', club=club, average_overall_rating=average_overall_rating, average_meeting_frequency=average_meeting_frequency)
+    return render_template('club_page.html', club=club, average_overall_rating=average_overall_rating, average_meeting_frequency=average_meeting_frequency, average_club_value=average_club_value, average_member_count=average_member_count)
 
 @app.route('/clubprofilepic/<string:club_name>')
 def fetchprofilepic(club_name):
