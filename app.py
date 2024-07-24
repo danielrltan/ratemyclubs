@@ -21,6 +21,8 @@ class Rating(db.Model):
     club_id = db.Column(db.String(100), db.ForeignKey('club.id'))
     overall_rating = db.Column(db.Float, nullable=False)
     meeting_frequency = db.Column(db.Float, nullable=False)
+    club_value = db.Column(db.Float, nullable=False)
+    member_count = db.Column(db.Integer, nullable=False)
     comment = db.Column(db.String(200), nullable=True)
 
     club = db.relationship('Club', backref=db.backref('ratings', lazy=True))
