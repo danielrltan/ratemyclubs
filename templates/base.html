@@ -45,7 +45,7 @@
             border-radius: 15px;
             background-color: #292929; /* Dark gray background */
             color: #ffffff; /* White text */
-            box-shadow: none;
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.753);
             transition: box-shadow 0.3s ease;
         }
 
@@ -191,10 +191,42 @@
         }
 
         .title {
-            font-size: 60px;
+            font-size: 35px;
             text-align: center;
-            margin-top: 150px;
-            margin-bottom: 150px;
+            margin-top: 75px;
+            margin-bottom: 75px;
+        }
+
+        .userratings {
+            font-family: "Inter", sans-serif;
+            background-color: #1f1f1f; /* Dark background */
+            color: #ffffff; /* White text */
+            margin-left: -40px;
+            padding: 15px;
+            padding-left: 30px;
+            padding-bottom: 30px;
+            border-radius: 15px;
+            font-size: 14px;
+        }
+
+        .edit-btn, .delete-btn {
+            font-family: "Inter", sans-serif;
+            padding: 7.5px 15px;
+            margin-right: 5px;
+            font-size: 14px;
+            color: #ffffff;
+            background-color: #4F2683; /* Dark purple */
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            border-radius: 50px;
+            text-align: center;
+            cursor: pointer;
+            border: 0;
+        }
+
+        .edit-btn:hover, .delete-btn:hover {
+            background-color: #8A2BE2; /* Bright purple */
+            transition: background-color 0.3s ease;
         }
     </style>
 </head>
