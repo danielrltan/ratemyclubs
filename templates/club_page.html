@@ -1,19 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1 class="title">{{ club.name }}</h1>
-    <div class="content">
-        <div class="club">
-            <b>
-                <p class="name">{{ club.name }}</p>
-                <p>Overall Rating: {{ average_overall_rating }}/5</p>
-            </b>
-            <div class="info">
-                {% if club.pictureblob %}
-                    <img src="{{ url_for('fetchprofilepic', club_name=club.name) }}" class="clubimage" alt="{{ club.name }} profile picture">
-                {% else %}
-                    <img src="path/to/default/image.jpg" class="clubimage" alt="{{ club.name }} profile picture">
-                {% endif %}
+<h1 class="clubtitle">
+    {% if club.pictureblob %}
+        <img src="{{ url_for('fetchprofilepic', club_name=club.name) }}" class="clubimage" alt="{{ club.name }} profile picture">
+    {% else %}
+        <img src="{{ url_for('static', filename='images/placeholder.png') }}" class="clubimage" alt="{{ club.name }} profile picture">
+    {% endif %}
+    {{ club.name }}
+</h1>
+<div class="content">
+    <div class="clubview">
                 <div class="club-buttons">
                     <a href="https://westernu.campuslabs.ca/engage/organization/{{ club.websitekey }}/contact" class="clubinfobtn">Contact</a>
                     <a href="https://westernu.campuslabs.ca/engage/organization/{{ club.websitekey }}/events" class="clubinfobtn">Events</a>

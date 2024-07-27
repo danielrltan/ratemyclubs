@@ -13,7 +13,7 @@
                     {% if club.pictureblob %}
                         <img src="{{ url_for('fetchprofilepic', club_name=club.name) }}" class="clubimagesmall" alt="{{ club.name }} profile picture">
                     {% else %}
-                        <img src="path/to/default/image.jpg" class="clubimagesmall" alt="{{ club.name }} profile picture">
+                        <img src="{{ url_for('static', filename='images/placeholder.png') }}" class="clubimagesmall" alt="{{ club.name }} profile picture">
                     {% endif %}
                     <div class="club-info">
                         <b>
