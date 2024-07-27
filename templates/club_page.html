@@ -6,6 +6,7 @@
         <div class="club">
             <b>
                 <p class="name">{{ club.name }}</p>
+                <p>Overall Rating: {{ average_overall_rating }}/5</p>
             </b>
             <div class="info">
                 {% if club.pictureblob %}
@@ -56,7 +57,7 @@
                 </div>
                 <div class="ratings">
                     <h4>{{ club.name}} Ratings</h4>
-                    <p>Overall Rating: {{ average_overall_rating }} | Meeting Frequency: {{ average_meeting_frequency }} | Club Value: {{ average_club_value }} | Member Count: {{ average_member_count }}</p>
+                    <p>Overall Rating: {{ average_overall_rating }}/5 | Meeting Frequency: {{ average_meeting_frequency }} | Club Value: {{ average_club_value }}/5 | Member Count: {{ average_member_count }}</p>
                     <h3></h3>
                     <ul>
                         {% for rating in club.ratings %}
