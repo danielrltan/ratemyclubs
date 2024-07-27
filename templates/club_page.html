@@ -13,6 +13,12 @@
                 {% else %}
                     <img src="path/to/default/image.jpg" class="clubimage" alt="{{ club.name }} profile picture">
                 {% endif %}
+                <div class="club-buttons">
+                    <a href="https://westernu.campuslabs.ca/engage/organization/{{ club.websitekey }}/contact" class="clubinfobtn">Contact</a>
+                    <a href="https://westernu.campuslabs.ca/engage/organization/{{ club.websitekey }}/events" class="clubinfobtn">Events</a>
+                    <a href="https://westernu.campuslabs.ca/engage/organization/{{ club.websitekey }}/roster" class="clubinfobtn">Officers</a>
+                    <a href="https://westernu.campuslabs.ca/engage/organization/{{ club.websitekey }}/gallery" class="clubinfobtn">Gallery</a>
+                </div>
                 <div class="description">
                     <h4>Description</h4>
                     <p>{{ club.description|safe }}</p>
@@ -93,19 +99,6 @@
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
-                </div>
-                <div class="contact-button">
-                    <a href="https://westernu.campuslabs.ca/engage/organization/{{ club.websitekey }}/contact" class="clubinfobtn">Contact</a>
-                </div>
-                <div class="events-button">
-                    <a href="https://westernu.campuslabs.ca/engage/organization/{{ club.websitekey }}/events" class="clubinfobtn">Events</a>
-                </div>
-                <div class="roster-button">
-                    <a href="https://westernu.campuslabs.ca/engage/organization/{{ club.websitekey }}/roster" class="clubinfobtn">Officers</a>
-                </div>
-                <div class="gallery-button">
-                    <a href="https://westernu.campuslabs.ca/engage/organization/{{ club.websitekey }}/gallery" class="clubinfobtn">Gallery</a>
-                </div>
             </div>
         </div>
     </div>
