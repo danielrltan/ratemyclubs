@@ -28,6 +28,10 @@ The primary goal of this project is to create a centralized platform where stude
    - Users can rate clubs on various criteria.
    - Users can leave comments sharing their personal experiences and feedback.
 
+4. **Microsoft University Email Single Sign On**:
+   - Instead of requiring account creation, students can simply sign on to Rate My Clubs using their university email address.
+   - Accounts will be tied to the university email address
+
 ## Stack
 
 - **Backend**: Flask (Python)
@@ -37,7 +41,7 @@ The primary goal of this project is to create a centralized platform where stude
 
 ## Future Enhancements
 - **Clean up Respository**: Yes the repo is super cluttered right now, will clean it up as I go and learn!!
-- **Use Carbon Framework**: Implementing IBM's CSS framework to make my website design more organized and clean.
+- **Implement Tailwind Framework**: Cleanup the current CSS and use Tailwind.
 - **Advanced Filtering and Search**: Implementing advanced filtering and search functionalities to help users find clubs that match their interests.
 - **Enhanced Rating System**: Adding more detailed rating categories and aggregate scores.
 - **User Authentication**: Enabling user registration and login to personalize the experience and manage contributions.
