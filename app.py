@@ -59,6 +59,8 @@ class Club(db.Model):
     website = db.Column(db.String(100), nullable=True)
     facebook = db.Column(db.String(100), nullable=True)
     twitter = db.Column(db.String(100), nullable=True)
+    email = db.Column(db.String(300), nullable=True)
+    phonenumber = db.Column(db.String(300), nullable=True)
     categorynames = db.Column(db.String(300), nullable=True)
     pictureblob = db.Column(db.LargeBinary, nullable=True)
     
@@ -111,6 +113,22 @@ import requests
 # &skip=0
 # &organizationIds%5B0%5D=1746
 
+def load_organization_data(web_key):
+    start_marker = "window.initialAppState = "
+    end_marker = "</script>"
+
+    club_url = f"https://westernu.campuslabs.ca/engage/organization/{web_key}"
+    response = requests.get(club_url)
+    if response.status_code == 200:
+        start_index = response.text.find(start_marker)
+        if start_index < 0:
+            return None
+        snipped_resp = response.text[start_index + len(start_marker) :]
+        snipped_resp = snipped_resp[: snipped_resp.find(end_marker) - 1]
+        return json.loads(snipped_resp)["preFetchedData"]["organization"]
+    else:
+        return None
+    
 def scrapepicture(pictureid):
         picture_url = f"https://se-images.campuslabs.ca/clink/images/{pictureid}?preset=med-sq"
         response = requests.get(picture_url)
@@ -137,6 +155,19 @@ def scrape():
         cur_club.categorynames = delimitedCategories
         q_result = db.session.query(Club).where(Club.id == cur_club.id)
         target_row = q_result.first()
+
+        org_data = load_organization_data(cur_club.websitekey)
+        if org_data is not None:
+            cur_club.youtube = org_data["socialMedia"]["youtubeUrl"]
+            cur_club.facebook = org_data["socialMedia"]["facebookUrl"]
+            cur_club.linkedin = org_data["socialMedia"]["linkedInUrl"]
+            cur_club.twitter = org_data["socialMedia"]["twitterUrl"]
+            cur_club.instagram = org_data["socialMedia"]["instagramUrl"]
+            cur_club.website = org_data["socialMedia"]["externalWebsite"]
+            cur_club.email = org_data["email"]
+            if len(org_data["contactInfo"]) >= 1:
+                cur_club.phonenumber = org_data["contactInfo"][0]["phoneNumber"]
+
         if target_row is None:
             cur_club.pictureblob = scrapepicture(cur_club.profilepicture)
             db.session.add(cur_club)
@@ -148,6 +179,14 @@ def scrape():
             target_row.name = cur_club.name
             target_row.profilepicture = cur_club.profilepicture
             target_row.summary = cur_club.summary
+            target_row.youtube = cur_club.youtube
+            target_row.facebook = cur_club.facebook
+            target_row.linkedin = cur_club.linkedin
+            target_row.twitter = cur_club.twitter
+            target_row.instagram = cur_club.instagram
+            target_row.website = cur_club.website
+            target_row.email = cur_club.email
+            target_row.phonenumber = cur_club.phonenumber
             target_row.websitekey = cur_club.websitekey
             target_row.shortname = cur_club.shortname
             target_row.description = cur_club.description
