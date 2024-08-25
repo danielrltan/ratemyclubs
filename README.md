@@ -41,8 +41,8 @@ The primary goal of this project is to create a centralized platform where stude
 
 ## Roadmap:
 
-- **Set up scraping engine**: Create a scraper that reads the website's HTML and essentially copies the club information over onto this website. ✅
-- **CRUD rating system**: Rating system that allows users to create, edit, and delete personalized ratings with multiple criteria. ✅
+- ✅ **Set up scraping engine**: Create a scraper that reads the website's HTML and essentially copies the club information over onto this website. 
+- ✅ **CRUD rating system**: Rating system that allows users to create, edit, and delete personalized ratings with multiple criteria. 
 - **Implement Tailwind Framework**: Cleanup the current CSS and use Tailwind or some sort of framework.
 - **Clean up repository**: Don't worry I'll make sure this mess gets organized soon
 - **Average rating display**: Display the average rating of clubs on individual club cards when scrolling through the club finder list.
