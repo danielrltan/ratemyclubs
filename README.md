@@ -39,14 +39,15 @@ The primary goal of this project is to create a centralized platform where stude
 - **Web Scraping**: Requests and JSON for API interaction
 - **Frontend**: HTML, CSS
 
-## Future Enhancements
-- **Clean up Respository**: Yes the repo is super cluttered right now, will clean it up as I go and learn!!
-- **Implement Tailwind Framework**: Cleanup the current CSS and use Tailwind.
-- **Advanced Filtering and Search**: Implementing advanced filtering and search functionalities to help users find clubs that match their interests.
-- **Enhanced Rating System**: Adding more detailed rating categories and aggregate scores.
-- **User Authentication**: Enabling user registration and login to personalize the experience and manage contributions.
-- **Remove Clubs From Database if Not in Official Website**: Detect if a website has been deleted from the official western website and update the database accordingly.
+## Roadmap:
 
+- **Set up scraping engine**: Create a scraper that reads the website's HTML and essentially copies the club information over onto this website. ✅
+- **CRUD rating system**: Rating system that allows users to create, edit, and delete personalized ratings with multiple criteria. ✅
+- **Implement Tailwind Framework**: Cleanup the current CSS and use Tailwind or some sort of framework.
+- **Clean up repository**: Don't worry I'll make sure this mess gets organized soon
+- **Average rating display**: Display the average rating of clubs on individual club cards when scrolling through the club finder list.
+- **Improved filtering and searching**: Implementing advanced filtering and search functionalities to help users find clubs that match their interests.
+- **Microsoft WesternIdentity SSO**: Allow students to easily login to the platform with their UWO email address.
 
 ## View Database Contents
 
