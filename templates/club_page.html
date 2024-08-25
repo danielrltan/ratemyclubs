@@ -23,34 +23,21 @@
                 </div>
                 <div class="contact">
                     <h4>Contact</h4>
-                    <p>{{ club.contact }}</p>
-                </div>
-                <div class="social-media">
-                    <h4>Social Media</h4>
                     <ul>
-                        {% if club.instagram %}<li>Instagram: <a href="{{ club.instagram }}">{{ club.instagram }}</a></li>{% endif %}
-                        {% if club.youtube %}<li>YouTube: <a href="{{ club.youtube }}">{{ club.youtube }}</a></li>{% endif %}
-                        {% if club.linkedin %}<li>LinkedIn: <a href="{{ club.linkedin }}">{{ club.linkedin }}</a></li>{% endif %}
-                        {% if club.website %}<li>Website: <a href="{{ club.website }}">{{ club.website }}</a></li>{% endif %}
                         {% if club.facebook %}<li>Facebook: <a href="{{ club.facebook }}">{{ club.facebook }}</a></li>{% endif %}
+                        {% if club.youtube %}<li>YouTube: <a href="{{ club.youtube }}">{{ club.youtube }}</a></li>{% endif %}
+                        {% if club.instagram %}<li>Instagram: <a href="{{ club.instagram }}">{{ club.instagram }}</a></li>{% endif %}
                         {% if club.twitter %}<li>Twitter: <a href="{{ club.twitter }}">{{ club.twitter }}</a></li>{% endif %}
+                        {% if club.website %}<li>Website: <a href="{{ club.website }}">{{ club.website }}</a></li>{% endif %}
+                        {% if club.phone %}<li>Phone: {{ club.phone }}</li>{% endif %}
+                        {% if club.email %}<li>Email: <a href="mailto:{{ club.email }}">{{ club.email }}</a></li>{% endif %}
                     </ul>
                 </div>
-                <div class="events">
-                    <h4>Events</h4>
-                    <ul>
-                        {% for event in club.events %}
-                            <li>{{ event.date }} - {{ event.title }}</li>
-                        {% endfor %}
-                    </ul>
+
+                    
                 </div>
-                <div class="officers">
-                    <h4>Officers</h4>
-                    <ul>
-                        {% for officer in club.officers %}
-                            <li>{{ officer.name }} - {{ officer.position }}</li>
-                        {% endfor %}
-                    </ul>
+ 
+                
                 </div>
                 <div class="ratings">
                     <h4>{{ club.name}} Ratings</h4>
