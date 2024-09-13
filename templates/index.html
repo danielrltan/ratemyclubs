@@ -2,23 +2,48 @@
 
 {% block content %}
     <h1 class="title">{% block title %} Rate My Clubs {% endblock %}</h1>
-    <form method="get" action="/" class="searchbar">
-        <input type="text" name="search" placeholder="Search clubs">
-        <input type="Submit" value="🔍" class="searchbar">
-    </form>
-    <div class="content">
+    <div class="gap-8 flex">
+      <div class="w-1/4 bg-slate-100">
+        <form method="get" action="/" class="searchbar">
+<label class="input input-bordered flex items-center gap-2">
+<input type="text" name="search" class="grow" placeholder="Search" />
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 16 16"
+    fill="currentColor"
+    class="h-4 w-4 opacity-70">
+    <path
+      fill-rule="evenodd"
+      d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+      clip-rule="evenodd" />
+  </svg>
+          <input type="Submit" value="" class="searchbar">
+        </form>
+      </div>
+        <div class="w-3/4" >
         {% for club in clubs %}
-            <div class="club">
-                <div class="club-card">
+            <div class="card lg:card-side bg-base-100 shadow-xl">
+              <figure>
                     {% if club.pictureblob %}
-                        <img src="{{ url_for('fetchprofilepic', club_name=club.name) }}" class="clubimagesmall" alt="{{ club.name }} profile picture">
+                        <img src="{{ url_for('fetchprofilepic', club_name=club.name) }}" alt="{{ club.name }} profile picture"k>
                     {% else %}
-                        <img src="{{ url_for('static', filename='images/placeholder.png') }}" class="clubimagesmall" alt="{{ club.name }} profile picture">
+                        <img class="object-scale-down h-170" src="{{ url_for('static', filename='images/placeholder.png') }}" alt="{{ club.name }} profile picture">
                     {% endif %}
-                    <div class="club-info">
-                        <b>
-                            <p class="name"><a href="{{ url_for('one_club', club_name=club.name) }}">{{ club.name }}</a></p>
-                        </b>
+              </figure>
+                    <div class="card-body">
+                        <div class="card-title bg-slate-500 rounded p-1.5">
+                          <div class="flex flex-1">
+                            <a class="flex-none" href="{{ url_for('one_club', club_name=club.name) }}">{{ club.name }}</a>
+                            <div class="flex-1"></div>
+                            <div class="rating flex-none">
+                              <input type="radio" name="rating-{{club.name}}" class="mask mask-star-2 bg-orange-400" />
+                              <input type="radio" name="rating-{{club.name}}" class="mask mask-star-2 bg-orange-400" checked="checked" />
+                              <input type="radio" name="rating-{{club.name}}" class="mask mask-star-2 bg-orange-400" />
+                              <input type="radio" name="rating-{{club.name}}" class="mask mask-star-2 bg-orange-400" />
+                              <input type="radio" name="rating-{{club.name}}" class="mask mask-star-2 bg-orange-400" />
+                            </div>
+                          </div>
+                        </div>
                         <div class="summary">
                             <p>{{ club.summary }}</p>
                             <b>Overall Rating: {{ average_overall_rating }}/5</b>
@@ -27,8 +52,8 @@
                             <p>{{ category }}</p>
                         {% endfor %}-->
                     </div>
-                </div>
             </div>
         {% endfor %}
+        </div>
     </div>
 {% endblock %}
