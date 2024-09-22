@@ -1,72 +1,72 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1 class="title">
-        {% block title %}Rate My Clubs{% endblock %}
-    </h1>
-    <div class="gap-8 flex">
-        <div class="w-1/4 bg-slate-100">
-            <form method="get" action="/" class="searchbar">
-                <label class="input input-bordered flex items-center gap-2">
-                    <input type="text" name="search" class="grow" placeholder="Search" />
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                         viewBox="0 0 16 16"
-                         fill="currentColor"
-                         class="h-4 w-4 opacity-70">
-                        <path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd" />
-                    </svg>
-                    <input type="Submit" value="" class="searchbar">
+    <div class="flex">
+        <aside class="w-1/4">
+            <div class="bg-gray-800 p-4 rounded-lg">
+                <form method="get" action="/" class="searchbar">
+                    <label class="input input-bordered flex items-center bg-gray-800 gap-2">
+                        <input type="text" name="search" class="grow" placeholder="Search" />
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             viewBox="0 0 16 16"
+                             fill="currentColor"
+                             class="h-4 w-4 opacity-70">
+                            <path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd" />
+                        </svg>
+                        <input type="Submit" value="" class="searchbar">
+                    </label>
                 </form>
             </div>
-            <div class="w-3/4">
-                {% for club in clubs %}
-                    <div class="bg-gray-800 rounded-lg p-0 flex mb-4">
-                        <!-- Club Info -->
-                        <div class="flex-auto">
-                            <!-- Club Name -->
-                            <div class=" bg-gray-700 text-white font-bold py-2 px-4 rounded-t-md mb-2 flex justify-between">
-                                <a class="text-2xl font-semibold m-2"
-                                   href="{{ url_for('one_club', club_name=club.name) }}">{{ club.name }}</a>
-                                <div class="flex items-center">
-                                    <div class="text-gray-400">155 ratings</div>
-                                    <div class="flex space-x-1 text-yellow-400 ml-4">
-                                        <span>⭐</span>
-                                        <span>⭐</span>
-                                        <span>⭐</span>
-                                        <span>⭐</span>
-                                        <span class="text-gray-400">⭐</span>
-                                    </div>
+        </aside>
+        <div class="w-3/4 ml-8 space-y-6">
+            {% for club in clubs %}
+                <div class="bg-gray-800 rounded-lg p-0 flex mb-4">
+                    <!-- Club Info -->
+                    <div class="flex-auto">
+                        <!-- Club Name -->
+                        <div class=" bg-gray-700 text-white font-bold py-2 px-4 rounded-t-md mb-2 flex justify-between">
+                            <a class="text-2xl font-semibold m-2"
+                               href="{{ url_for('one_club', club_name=club.name) }}">{{ club.name }}</a>
+                            <div class="flex items-center">
+                                <div class="text-gray-400">155 ratings</div>
+                                <div class="flex space-x-1 text-yellow-400 ml-4">
+                                    <span>⭐</span>
+                                    <span>⭐</span>
+                                    <span>⭐</span>
+                                    <span>⭐</span>
+                                    <span class="text-gray-400">⭐</span>
                                 </div>
                             </div>
-                            <!-- Club Description -->
-                            <div class="flex space-x-8">
-                                {% if club.pictureblob %}
-                                    <img class="rounded m-2"
-                                         src="{{ url_for('fetchprofilepic', club_name=club.name) }}"
-                                         alt="{{ club.name }} profile picture"
-                                         k>
-                                {% else %}
-                                    <img class="object-scale-down h-170 rounded m-2"
-                                         src="{{ url_for('static', filename='images/placeholder.png') }}"
-                                         alt="{{ club.name }} profile picture">
-                                {% endif %}
-                                <div class="m-2 flex flex-col justify-stretch">
-                                    <div class="text-gray-400 flex-grow">{{ club.summary }}</div>
-                                    <div class="flex justify-end items-center space-x-4 m-2 text-gray-400">
-                                        <span><strong class="text-white">5</strong> Meetings per
-                                        week</span>
-                                        <span><strong class="text-white">5</strong> Events per
-                                        year</span>
-                                        <span><strong class="text-white">4/5</strong> Leadership</span>
-                                        <span><strong class="text-white">{{ average_overall_rating }}/5</strong> Overall</span>
-                                    </div>
+                        </div>
+                        <!-- Club Description -->
+                        <div class="flex space-x-8">
+                            {% if club.pictureblob %}
+                                <img class="rounded m-2"
+                                     src="{{ url_for('fetchprofilepic', club_name=club.name) }}"
+                                     alt="{{ club.name }} profile picture"
+                                     k>
+                            {% else %}
+                                <img class="object-scale-down h-170 rounded m-2"
+                                     src="{{ url_for('static', filename='images/placeholder.png') }}"
+                                     alt="{{ club.name }} profile picture">
+                            {% endif %}
+                            <div class="m-2 flex flex-col justify-stretch">
+                                <div class="text-gray-400 flex-grow">{{ club.summary }}</div>
+                                <div class="flex justify-end items-center space-x-4 m-2 text-gray-400">
+                                    <span><strong class="text-white">5</strong> Meetings per
+                                    week</span>
+                                    <span><strong class="text-white">5</strong> Events per
+                                    year</span>
+                                    <span><strong class="text-white">4/5</strong> Leadership</span>
+                                    <span><strong class="text-white">{{ average_overall_rating }}/5</strong> Overall</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!--{% for category in club.categorynames.split(";") %}
+                </div>
+                <!--{% for category in club.categorynames.split(";") %}
                             <p>{{ category }}</p>
                         {% endfor %}-->
-                {% endfor %}
-            </div>
+            {% endfor %}
         </div>
-    {% endblock %}
+    </div>
+{% endblock %}
